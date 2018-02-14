@@ -8,7 +8,9 @@ const router = require('./router')
 module.exports = async () => {
   const app = new koa()
   app.use(morgan('dev', {
-    stream: {write: str => log(str)},
+    stream: {
+      write: args => log(args.trim())
+    },
   }))
   app.use(bodyParser())
   app.use(router.routes())
