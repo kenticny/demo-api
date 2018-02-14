@@ -104,4 +104,27 @@ router.post('/menu', async ctx => {
   }
 })
 
+router.delete('/menu/:id', async ctx => {
+  const id = ctx.params.id
+  let idx = -1
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].id == id) {
+      idx = i
+      break
+    }
+  }
+  if (idx < 0) {
+    ctx.response.status = 404
+    ctx.body = {
+      code: -1,
+      message: 'cannot find menu',
+    }
+    return
+  }
+  data.splice(idx, 1)
+  ctx.body = {
+    code: 0
+  }
+})
+
 module.exports = router
