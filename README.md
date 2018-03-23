@@ -30,3 +30,9 @@ This this a demo api server in node.js for test.
     - 参数Params:
 
       `id` number ID, 必填
+      
+- `DELETE /menu/:id` 删除MENU
+
+    - 参数Params:
+    
+        `id` number ID, 必填
