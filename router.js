@@ -1,4 +1,5 @@
 const Router = require('koa-router')
+const uuid = require('uuid')
 const router = new Router()
 
 const data = [{
@@ -23,6 +24,23 @@ router.get('/ping', async ctx => {
   ctx.body = {
     code: 0,
     data: 'ok',
+  }
+})
+
+router.get('/tools', async ctx => {
+  ctx.body = {
+    code: 0,
+    data: [
+      '/tools/uuid'
+    ],
+  }
+})
+
+router.get('/tools/uuid', async ctx => {
+  const id = uuid.v4()
+  ctx.body = {
+    code: 0,
+    data: id,
   }
 })
 
