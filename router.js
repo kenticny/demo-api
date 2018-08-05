@@ -1,24 +1,12 @@
 const Router = require('koa-router')
 const uuid = require('uuid')
+const Menu = require('./routes/menu')
 const router = new Router()
 
-const data = [{
-  id: 1,
-  name: 'GongBaoJiDing',
-  price: 25,
-}, {
-  id: 2,
-  name: 'YuXiangRouSi',
-  price: 28,
-}, {
-  id: 3,
-  name: 'LuShiHongShaoRou',
-  price: 29,
-}, {
-  id: 4,
-  name: 'CuLiuFeiChang',
-  price: 35,
-}]
+router.get('/', async ctx => {
+  router.stack.map(p => p.path)
+  await ctx.render('index')
+})
 
 router.get('/ping', async ctx => {
   ctx.body = {
@@ -44,105 +32,11 @@ router.get('/tools/uuid', async ctx => {
   }
 })
 
-router.get('/menus', async ctx => {
-  ctx.body = {
-    code: 0,
-    data,
-  }
-})
-
-router.get('/menu/:id', async ctx => {
-  const id = ctx.params.id
-  const menu = data.find(item => item.id == id)
-  if (!menu) {
-    ctx.response.status = 404
-    ctx.body = {
-      code: -1,
-      message: 'cannot find menu',
-    }
-    return
-  }
-  ctx.body = {
-    code: 0,
-    data: menu,
-  }
-})
-
-router.put('/menu', async ctx => {
-  const name = ctx.request.body.name
-  const price = ctx.request.body.price
-  if (!name || !price) {
-    ctx.response.status = 500
-    ctx.body = {
-      code: -1,
-      message: 'missing parameters'
-    }
-    return
-  }
-  const id = data.length + 1
-  const record = {
-    id,
-    name,
-    price,
-  }
-  data.push(record)
-  ctx.body = {
-    code: 0,
-    data: record,
-  }
-})
-
-router.post('/menu', async ctx => {
-  const id = ctx.request.body.id
-  const name = ctx.request.body.name
-  const price = ctx.request.body.price
-
-  if (!id) {
-    ctx.response.status = 500
-    ctx.body = {
-      code: -1,
-      message: 'missing parameter',
-    }
-    return
-  }
-  const record = data.find(item => item.id == id)
-  if (!record) {
-    ctx.response.status = 500
-    ctx.body = {
-      code: -1,
-      message: 'cannot find menu',
-    }
-    return
-  }
-  if (name) record.name = name
-  if (price) record.price = price
-  ctx.body = {
-    code: 0,
-    data: record,
-  }
-})
-
-router.delete('/menu/:id', async ctx => {
-  const id = ctx.params.id
-  let idx = -1
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].id == id) {
-      idx = i
-      break
-    }
-  }
-  if (idx < 0) {
-    ctx.response.status = 404
-    ctx.body = {
-      code: -1,
-      message: 'cannot find menu',
-    }
-    return
-  }
-  data.splice(idx, 1)
-  ctx.body = {
-    code: 0
-  }
-})
+// Menu API
+router.get('/menus', Menu.menuList)
+router.get('/menus/:id', Menu.getMenuByID)
+router.put('/menus', Menu.createMenu)
+router.post('/menus', Menu.updateMenu)
+router.delete('/menus/:id', Menu.deleteMenu)
 
 module.exports = router
