@@ -32,6 +32,12 @@ router.get('/tools/uuid', async ctx => {
   }
 })
 
+router.get('/tools/network/ip', async ctx => {
+  ctx.body = {
+    ip: ctx.ip,
+  }
+})
+
 // Menu API
 router.get('/menus', Menu.menuList)
 router.get('/menus/:id', Menu.getMenuByID)
