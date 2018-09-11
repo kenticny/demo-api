@@ -19,7 +19,8 @@ router.get('/tools', async ctx => {
   ctx.body = {
     code: 0,
     data: [
-      '/tools/uuid'
+      '/tools/uuid',
+      '/tools/network/ip'
     ],
   }
 })
@@ -34,7 +35,7 @@ router.get('/tools/uuid', async ctx => {
 
 router.get('/tools/network/ip', async ctx => {
   ctx.body = {
-    ip: ctx.ip,
+    ip: ctx.request.ip,
   }
 })
 
