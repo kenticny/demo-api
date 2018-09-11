@@ -35,7 +35,8 @@ router.get('/tools/uuid', async ctx => {
 
 router.get('/tools/network/ip', async ctx => {
   ctx.body = {
-    ip: ctx.request.header['x-real-ip'] || ctx.request.ip,
+    code: 0,
+    data: ctx.request.header['x-real-ip'] || ctx.request.ip,
   }
 })
 
