@@ -1,5 +1,6 @@
 const Router = require('koa-router')
 const uuid = require('uuid')
+const nconvertor = require('@kenticny/numconverter')
 const Menu = require('./routes/menu')
 const router = new Router()
 
@@ -18,21 +19,17 @@ router.get('/ping', async ctx => {
   }
 })
 
-router.get('/tools', async ctx => {
-  ctx.body = {
-    code: 0,
-    data: [
-      '/tools/uuid',
-      '/tools/network/ip'
-    ],
-  }
-})
-
 router.get('/tools/uuid', async ctx => {
   const id = uuid.v4()
+  const nodashid = id.replace(/-/g, '')
   ctx.body = {
     code: 0,
-    data: id,
+    data: {
+      uuid: id,
+      uuid_without_dash: nodashid,
+      uuid_base64: Buffer.from(nodashid).toString('base64'),
+      uuid_62_system: nconvertor(nodashid, '16', '62'),
+    }
   }
 })
 
