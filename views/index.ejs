@@ -3,5 +3,24 @@
 <head></head>
 <body>
 <h1>Demo API</h1>
+<div>Demo API routers as following: </div>
+<%
+  for (let i = 0; i < r.length; i++) {
+%>
+<%
+  if (r[i].method == 'GET') {
+%>
+  <div><a href="<%= r[i].path %>"><%= r[i].method %> <%= r[i].path %></a></div>
+<%
+  } else {
+%>
+  <div><%= r[i].method %> <%= r[i].path %>  (Please test the request in specific method: <%= r[i].method %>)</div>
+<%
+  }
+%>
+  
+<%
+  }
+%>
 </body>
 </html>

@@ -5,11 +5,14 @@ const Menu = require('./routes/menu')
 const router = new Router()
 
 router.get('/', async ctx => {
-  const paths = router.stack.map(p => p.path)
-  ctx.body = {
-    code: 0,
-    data: paths,
-  }
+  const r = []
+  router.stack.map(n => {
+    r.push({
+      method: n.methods[n.methods.length - 1],
+      path: n.path,
+    })
+  })
+  await ctx.render('index', { r })
 })
 
 router.get('/ping', async ctx => {
