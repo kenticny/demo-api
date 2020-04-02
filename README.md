@@ -44,8 +44,11 @@ This this a demo api server in node.js for test.
     - 返回值
 
     `uuid`: V4版本UUID
+
     `uuid_without_dash`: UUID 过滤 “-“
+
     `uuid_base64`: uuid_without_dash 进行base64编码
+
     `uuid_62_system`: uuid_without_dash 转为 62 进制，转换工具 @kenticny/numconverter
 
 - `GET /tools/network/ip` 获取客户端IP
